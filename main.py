@@ -1,3 +1,5 @@
+import time
+
 from videopoker.card import Card, SPADE, HEART, DIAMOND, CLUB
 from videopoker.hand import Hand
 
@@ -26,10 +28,12 @@ def main():
         new_five = sorted(hold_cards + cards[5:5+to_draw])
         print(new_five)
 
-        hand = Hand(deal_five)
+        hand = Hand(new_five)
         score = score_hand(hand)
         print("Hand Scores: {}".format(score))
+        print()
         coins += score
+        time.sleep(1)
 
 def score_hand(hand):
     if hand.is_royal_flush():
@@ -53,14 +57,12 @@ def score_hand(hand):
     else:
         return 0
 
-
 def generate_deck():
     cards = []
     for rank in range(2, 15):
         for suit in range(0, 4):
             cards.append(Card(rank, suit))
     return cards
-
 
 if __name__=="__main__":
     main()
