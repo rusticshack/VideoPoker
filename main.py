@@ -1,22 +1,24 @@
 import time
 
 from videopoker.card import Card, SPADE, HEART, DIAMOND, CLUB
+from videopoker.deck import Deck
 from videopoker.hand import Hand
 
 import random
 
+HAND_SIZE=5
 
 def main():
-    cards = generate_deck()
     coins = 100
+    deck = Deck()
 
     while True:
         print("Total Coins: {}   Cost to Play: 1".format(coins))
         input("Ready?")
         coins -= 1
-        random.shuffle(cards)
+        deck.shuffle()
 
-        deal_five = sorted(cards[:5])
+        deal_five = sorted(deck.deal(HAND_SIZE))
         print(deal_five)
         val = input("Select Cards to Hold: ")
         holds = list(val)
@@ -25,7 +27,7 @@ def main():
             hold_cards.append(deal_five[int(h)-1])
 
         to_draw = 5 - len(hold_cards)
-        new_five = sorted(hold_cards + cards[5:5+to_draw])
+        new_five = sorted(hold_cards + deck.deal(to_draw))
         print(new_five)
 
         hand = Hand(new_five)
@@ -56,13 +58,6 @@ def score_hand(hand):
         return 1
     else:
         return 0
-
-def generate_deck():
-    cards = []
-    for rank in range(2, 15):
-        for suit in range(0, 4):
-            cards.append(Card(rank, suit))
-    return cards
 
 if __name__=="__main__":
     main()

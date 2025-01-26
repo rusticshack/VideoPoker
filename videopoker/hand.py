@@ -4,7 +4,7 @@ from collections import Counter
 class Hand:
     def __init__(self, hand):
         if len(hand) != 5:
-            raise ValueError("Hand must be 5 cards")
+            raise ValueError("Hand must be 5 cards, got {}".format(len(hand)))
         self.cards = sorted(hand)
 
     def is_royal_flush(self):
