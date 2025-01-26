@@ -7,6 +7,9 @@ class Hand:
             raise ValueError("Hand must be 5 cards, got {}".format(len(hand)))
         self.cards = sorted(hand)
 
+    def __repr__(self):
+        return self.cards.__repr__()
+
     def is_royal_flush(self):
         return self.cards[0].rank == 10 and self.is_straight_flush()
 

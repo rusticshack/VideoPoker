@@ -1,12 +1,8 @@
 import time
 
-from videopoker.card import Card, SPADE, HEART, DIAMOND, CLUB
 from videopoker.deck import Deck
 from videopoker.hand import Hand
 
-import random
-
-HAND_SIZE=5
 
 def main():
     coins = 100
@@ -18,24 +14,25 @@ def main():
         coins -= 1
         deck.shuffle()
 
-        deal_five = sorted(deck.deal(HAND_SIZE))
-        print(deal_five)
-        val = input("Select Cards to Hold: ")
-        holds = list(val)
-        hold_cards = []
-        for h in holds:
-            hold_cards.append(deal_five[int(h)-1])
+        hand = deck.deal_hand()
+        print(hand)
 
-        to_draw = 5 - len(hold_cards)
-        new_five = sorted(hold_cards + deck.deal(to_draw))
-        print(new_five)
+        hand = select_holds(deck, hand)
+        print(hand)
 
-        hand = Hand(new_five)
         score = score_hand(hand)
         print("Hand Scores: {}".format(score))
         print()
+
         coins += score
         time.sleep(1)
+
+
+def select_holds(deck, hand):
+    val = input("Select Cards to Hold: ")
+    hold_cards = [hand.cards[int(hold) - 1] for hold in list(val)]
+    return deck.deal_hand(hold_cards)
+
 
 def score_hand(hand):
     if hand.is_royal_flush():
