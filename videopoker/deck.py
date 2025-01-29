@@ -16,7 +16,9 @@ class Deck:
         self.index = 0
         random.shuffle(self.cards)
 
-    def deal_hand(self, cards=[]):
+    def deal_hand(self, cards=None):
+        if cards is None:
+            cards = []
         while len(cards) < 5:
             cards.append(self.deal())
         return Hand(cards)
